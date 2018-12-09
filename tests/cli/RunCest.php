@@ -73,7 +73,10 @@ class RunCest
         $I->executeCommand('run dummy --xml');
         $I->seeFileFound('report.xml', 'tests/_output');
         $I->seeInThisFile('<?xml');
-        $I->seeInThisFile('<testsuite name="dummy"');
+        $I->seeInThisFile('<testsuite name="dummy" tests="6" assertions="3" errors="0" failures="0" skipped="0" time=');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherCest.php"/');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherTest.php"/');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time=/');
         $I->seeInThisFile('<testcase name="FileExists"');
         $I->seeInThisFile('feature="');
     }
@@ -88,8 +91,10 @@ class RunCest
         $I->executeCommand('run dummy --xml -c codeception_strict_xml.yml');
         $I->seeFileFound('report.xml', 'tests/_output');
         $I->seeInThisFile('<?xml');
-        $I->seeInThisFile('<testsuite name="dummy"');
-        $I->seeInThisFile('<testcase name="FileExists"');
+        $I->seeInThisFile('<testsuite name="dummy" tests="6" assertions="3" errors="0" failures="0" skipped="0" time=');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherCest.php"/');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherTest.php"/');
+        $I->seeThisFileMatches('/<testsuite file=".*?AnotherTest.php" tests="2" assertions="2" errors="0" failures="0" skipped="0" time=/');
         $I->dontSeeInThisFile('feature="');
     }
 
